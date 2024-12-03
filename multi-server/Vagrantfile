@@ -1,0 +1,62 @@
+Vagrant.configure("2") do |config|
+  # Menambahkan waktu timeout booting (opsional)
+  # config.vm.boot_timeout = 600  # Mengatur timeout menjadi 600 detik (10 menit)
+  
+  # Server pertama
+  config.vm.define "server1" do |server1|
+    server1.vm.provider "virtualbox" do |vb|
+      vb.memory = "1024"     # RAM 1024MB
+      vb.cpus = 1            # CPU 1 core (500m CPU)
+      vb.customize ["createhd", "--filename", "server1_disk.vdi", "--size", 40960]  # Disk 40GB
+      vb.name = "Server1_VM"
+    end
+    server1.vm.box = "ubuntu/bionic64" # Ganti sesuai dengan box yang diinginkan
+    server1.vm.hostname = "server1"    # Nama host server
+
+    # Menggunakan forwarded_port untuk membuka port
+    #server1.vm.network "forwarded_port", guest: 80, host: 8081  # Forward HTTP (Port 80 ke Port 8081)
+    #server1.vm.network "forwarded_port", guest: 22, host: 1221  # Forward SSH (Port 22 ke Port 1221)
+
+    # Alternatively, you can configure a specific IP address
+    # server1.vm.network "private_network", ip: "192.168.56.201"
+  end
+  
+  # Server kedua
+  config.vm.define "server2" do |server2|
+    server2.vm.provider "virtualbox" do |vb|
+      vb.memory = "2048"     # RAM 2048MB
+      vb.cpus = 2            # CPU 2 core (1000m CPU)
+      vb.customize ["createhd", "--filename", "server2_disk.vdi", "--size", 30720]  # Disk 30GB
+      vb.name = "Server2_VM"
+    end
+    server2.vm.box = "ubuntu/bionic64" # Ganti sesuai dengan box yang diinginkan
+    server2.vm.hostname = "server2"    # Nama host server
+
+    # Menggunakan forwarded_port untuk membuka port
+    #server2.vm.network "forwarded_port", guest: 80, host: 8082  # Forward HTTP (Port 80 ke Port 8082)
+    #server2.vm.network "forwarded_port", guest: 22, host: 1222  # Forward SSH (Port 22 ke Port 1222)
+
+    # Alternatively, you can configure a specific IP address
+    # server2.vm.network "private_network", ip: "192.168.56.202"
+  end
+  
+  # Server ketiga
+  config.vm.define "server3" do |server3|
+    server3.vm.provider "virtualbox" do |vb|
+      vb.memory = "512"      # RAM 512MB
+      vb.cpus = 1            # CPU 1 core (250m CPU)
+      vb.customize ["createhd", "--filename", "server3_disk.vdi", "--size", 25600]  # Disk 25GB
+      vb.name = "Server3_VM"
+    end
+    server3.vm.box = "ubuntu/bionic64" # Ganti sesuai dengan box yang diinginkan
+    server3.vm.hostname = "server3"    # Nama host server
+
+    # Menggunakan forwarded_port untuk membuka port
+    #server3.vm.network "forwarded_port", guest: 80, host: 8083  # Forward HTTP (Port 80 ke Port 8083)
+    #server3.vm.network "forwarded_port", guest: 22, host: 1223  # Forward SSH (Port 22 ke Port 1223)
+
+    # Alternatively, you can configure a specific IP address
+    # server3.vm.network "private_network", ip: "192.168.56.203"
+  end
+
+end
